@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "CodeLLDB Debug",
+      "name": "CodeLLDB Debugger",
       "type": "lldb",
       "request": "launch",
       "program": "${workspaceFolder}/zig-out/bin/hello-world.exe",
@@ -13,10 +13,10 @@
       "terminal": "integrated",
     },
     {
-      "name": "MSVC Debug",
+      "name": "MSVC Debugger",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/zig-out/bin/hello-world.exe",
+      "program": "${workspaceFolder}/DummyRaylibProject/zig-out/bin/DummyRaylibProject.exe",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
