@@ -1,2 +1,9 @@
 .zig-cache/
 zig-out/
+.vscode/
+.vscode/launch.json
+.vscode/tasks.json
+pTest/
+DummyRaylibProject/
+raylib-zig-devel/
+
