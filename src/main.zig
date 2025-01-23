@@ -31,6 +31,13 @@
 
 const std = @import("std");
 const rl = @import("raylib");
+const math = @import("utils/math.zig");
+const GameSimulation = @import("GameSimulation.zig");
+
+const GameObject = struct {
+    x: i32,
+    y: i32,
+};
 
 pub fn main() anyerror!void {
     // Initialization
@@ -44,12 +51,63 @@ pub fn main() anyerror!void {
     rl.setTargetFPS(60); // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
+    // Our game state
+    var gameState = GameSimulation.GameState {};
+
+    // Initialize our game object
+    gameState.physicsComponents[0].position =  .{ .x = 400, .y = 200 };
+
     // Main game loop
     while (!rl.windowShouldClose()) { // Detect window close button or ESC key
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+        var PressingUp: bool = false;
+        var PressingDown: bool = false;
+        var PressingLeft: bool = false;
+        var PressingRight: bool = false;
+
+        if (rl.isWindowFocused() and rl.isGamepadAvailable(0)) {
+            if (rl.isGamepadButtonDown(0, rl.GamepadButton.left_face_up)) {
+                PressingUp = true;
+            }
+
+            if (rl.isGamepadButtonDown(0, rl.GamepadButton.left_face_down)) {
+                PressingDown = true;
+            }
+
+            if (rl.isGamepadButtonDown(0, rl.GamepadButton.left_face_left)) {
+                PressingLeft = true;
+            }
+
+            if (rl.isGamepadButtonDown(0, rl.GamepadButton.left_face_right)) {
+                PressingRight = true;
+            }
+        }
+
+        // Game simulation
+        {
+            // Update position of object based on player's input
+            {
+                const entity = &gameState.physicsComponents[0];
+
+                if (PressingUp) {
+                    entity.velocity.y = -1;
+                }
+                else if (PressingDown) {
+                    entity.velocity.y = 1;
+                }
+                else if (PressingLeft) {
+                    entity.velocity.x = -1;
+                }
+                else if (PressingRight) {
+                    entity.velocity.x = 1;
+                }
+                else {
+                    entity.velocity.y = 0;
+                    entity.velocity.x = 0;
+                }
+            }
+
+            GameSimulation.UpdateGame(&gameState);
+        }
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -58,7 +116,10 @@ pub fn main() anyerror!void {
 
         rl.clearBackground(rl.Color.white);
 
-        rl.drawText("Congrats! You created your first window!", 190, 200, 20, rl.Color.brown);
+        // rl.drawText("Congrats! You created your first window!", 190, 200, 20, rl.Color.brown);
+
+        // Reflect the position of out game object on screen
+        rl.drawCircle(gameState.physicsComponents[0].position.x, gameState.physicsComponents[0].position.y, 50, rl.Color.maroon);
         //----------------------------------------------------------------------------------
     }
 }

@@ -1,0 +1,48 @@
+* Principles *
+- No OOP.
+- Data oriented.
+- No deep structures. Not only data, but also code. "Flat".
+- Pipelining. Preparing data in stages that stage.
+- Determinism.
+- Code isolation for game simulation.
+- Split the pipeline into systems.
+- Handles over pointers.
+- Store data in components.
+
+
+* Code structure *
+
+Platform Initialization()
+
+Game loop:
+    InputHandling() // This must go before everything else, otherwise it will be read with extra delay
+
+    NetworkUpdate() // This is done before the game simulation to send and receive inputs as quickly as possible
+
+    GameSimulation {                // This generates the state
+        CommandBufferUpdate()       // Take what comes from InputHandling and generate the "commands" which drive the character state
+
+        ActionStateMachine()        // Update what "move" the character currently is in
+
+        AnimationSystemUpdate()
+
+        CharacterPhysicsUpdate()    // Handle position/velocity/acceleration changes
+
+        GameCammeraUpdate()
+
+        CharacterPushCollision()
+
+        WallUpdate()
+
+        WallCollisionHandling()
+
+        CharacterAttackCollision()  // Processing collisions between attacks and vulnerable hurtboxes
+
+        ReactionSystemUpdate()      // Transitions characters into reaction states
+    }
+
+    VisualCammeraUpdate()
+
+    StoreGameState()
+
+    Redering() // This draws everything on the screen
