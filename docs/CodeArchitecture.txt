@@ -46,3 +46,17 @@ Game loop:
     StoreGameState()
 
     Redering() // This draws everything on the screen
+
+
+** Action State Machine Data **
+
+- Unique Identifier (integer/enum)
+- Associated properties for each state (animations, hitboxes, sounds, hit properties, VFX)
+- Custom Transitions (condition, target states)
+
+
+** Action State Machine Processor **
+
+- Handle the state transitions.
+- Check transition conditions of the current state and sets the next state.
+- Must handle state initialization when transitioning and state tear down.

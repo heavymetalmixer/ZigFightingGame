@@ -1,0 +1,9 @@
+** Action State Machine **
+
+*** Concepts ***
+- There are actions. There actions are unique.
+- A charater can only be performing one action at a time (only can be in one state).
+- An action has one or more animations that is played.
+- In general, an "action state" or just "action" will execute until the end of the action's animation.
+- Most actions will return to the "idle" state. Also called "neutral state".
+- The idle states (like standing, crouching, jumping, etc) transtion into attacks and other actions commanded by the player.
