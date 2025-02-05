@@ -34,10 +34,9 @@ const rl = @import("raylib");
 const math = @import("utils/math.zig");
 const GameSimulation = @import("GameSimulation.zig");
 
-const GameObject = struct {
-    x: i32,
-    y: i32,
-};
+fn TestOnStart() void {
+    std.debug.print("Calling test on start", .{});
+}
 
 pub fn main() anyerror!void {
     // Initialization
@@ -56,6 +55,7 @@ pub fn main() anyerror!void {
 
     // Initialize our game object
     gameState.physicsComponents[0].position =  .{ .x = 400, .y = 200 };
+
 
     // Main game loop
     while (!rl.windowShouldClose()) { // Detect window close button or ESC key
